@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace homehelp.Events
 {
-    public class EventListenerBool : MonoBehaviour
+    public class EventListener_className_ : MonoBehaviour
     {
-        public GameEventBool gameEvent;
-        public UnityEventBool response;
+        public GameEvent_className_ gameEvent;
+        public UnityEvent_className_ response;
 
         public void OnEnable()
         {
@@ -16,6 +16,6 @@ namespace homehelp.Events
             if (gameEvent != null) gameEvent.Unregister(this);
         }
 
-        public void OnEventRaised(bool value) { response.Invoke(value); }
+        public void OnEventRaised(_className_ value) { response.Invoke(value); }
     }
 }

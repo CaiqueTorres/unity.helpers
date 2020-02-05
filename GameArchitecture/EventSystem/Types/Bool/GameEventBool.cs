@@ -1,25 +1,44 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "New Bool GameEvent", menuName = "GameEvent/Bool")]
-public class GameEventBool : ScriptableObject
+namespace homehelp.Events
 {
-    private List<EventListenerBool> eventListeners = new List<EventListenerBool>();
-    public bool reference;
-
-    public void Raise(bool value)
+    [CreateAssetMenu(fileName = "New Bool GameEvent", menuName = "GameEvent/Bool")]
+    public class GameEventBool : ScriptableObject
     {
-        reference = value;
-        foreach (EventListenerBool item in eventListeners) { item.OnEventRaised(value); }
-    }
+        private readonly List<EventListenerBool> _eventListeners = new List<EventListenerBool>();
 
-    public void Register(EventListenerBool listener)
-    {
-        if (!eventListeners.Contains(listener)) { eventListeners.Add(listener); }
-    }
+        [HideInInspector] public bool value;
+        public bool simulateValue;
 
-    public void Unregister(EventListenerBool listener)
-    {
-        if (eventListeners.Contains(listener)) { eventListeners.Remove(listener); }
+        private void Awake()
+        {
+            value = false;
+        }
+
+        public void Raise(bool value)
+        {
+            this.value = value;
+            foreach (var item in _eventListeners)
+            {
+                item.OnEventRaised(value);
+            }
+        }
+
+        public void Register(EventListenerBool listener)
+        {
+            if (!_eventListeners.Contains(listener))
+            {
+                _eventListeners.Add(listener);
+            }
+        }
+
+        public void Unregister(EventListenerBool listener)
+        {
+            if (_eventListeners.Contains(listener))
+            {
+                _eventListeners.Remove(listener);
+            }
+        }
     }
 }

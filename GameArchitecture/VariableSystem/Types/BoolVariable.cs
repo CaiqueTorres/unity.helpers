@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using homehelp.Events;
 
-[CreateAssetMenu(menuName = "Variable/Bool", fileName = "New Bool Variable")]
-public class BoolVariable : ScriptableObject
+namespace homehelp.Variables
+{
+    [CreateAssetMenu(menuName = "Variable/Bool", fileName = "New Bool Variable")]
+    public class BoolVariable : ScriptableObject
 {
     public enum GameEventType
     {
@@ -14,7 +17,7 @@ public class BoolVariable : ScriptableObject
     public GameEventBool changedEventBool;
     public GameEventVoid changedEventVoid;
 
-    private bool value;
+    [SerializeField] private bool value;
     public bool Value
     {
         get
@@ -62,4 +65,5 @@ public class BoolVariable : ScriptableObject
     {
         return variable.Value;
     }
+}
 }

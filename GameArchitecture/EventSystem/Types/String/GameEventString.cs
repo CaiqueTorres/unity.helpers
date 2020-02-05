@@ -1,27 +1,44 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "New String GameEvent", menuName = "GameEvent/String")]
-public class GameEventString : ScriptableObject
+namespace homehelp.Events
 {
-    private List<EventListenerString> eventListeners = new List<EventListenerString>();
-    public string reference;
-
-    private void Awake() { reference = "null"; }
-
-    public void Raise(string value)
+    [CreateAssetMenu(fileName = "New String GameEvent", menuName = "GameEvent/String")]
+    public class GameEventString : ScriptableObject
     {
-        reference = value;
-        foreach  (EventListenerString item in eventListeners) { item.OnEventRaised(value); }
-    }
+        private readonly List<EventListenerString> _eventListeners = new List<EventListenerString>();
 
-    public void Register(EventListenerString listener)
-    {
-        if (!eventListeners.Contains(listener)) { eventListeners.Add(listener); }
-    }
+        [HideInInspector] public string value;
+        public string simulateValue;
 
-    public void Unregister(EventListenerString listener)
-    {
-        if (eventListeners.Contains(listener)) { eventListeners.Remove(listener); }
+        private void Awake()
+        {
+            value = "null";
+        }
+
+        public void Raise(string value)
+        {
+            this.value = value;
+            foreach (var item in _eventListeners)
+            {
+                item.OnEventRaised(value);
+            }
+        }
+
+        public void Register(EventListenerString listener)
+        {
+            if (!_eventListeners.Contains(listener))
+            {
+                _eventListeners.Add(listener);
+            }
+        }
+
+        public void Unregister(EventListenerString listener)
+        {
+            if (_eventListeners.Contains(listener))
+            {
+                _eventListeners.Remove(listener);
+            }
+        }
     }
 }

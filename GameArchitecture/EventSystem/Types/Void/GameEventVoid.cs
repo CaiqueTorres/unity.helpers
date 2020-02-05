@@ -1,28 +1,31 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Void GameEvent", menuName = "GameEvent/Void")]
-public class GameEventVoid : ScriptableObject
+namespace homehelp.Events
 {
-    private List<EventListenerVoid> eventListeners = new List<EventListenerVoid>();
-
-    public void Raise()
+    [CreateAssetMenu(fileName = "New Void GameEvent", menuName = "GameEvent/Void")]
+    public class GameEventVoid : ScriptableObject
     {
-        for (int i = 0; i <eventListeners.Count; i++)
+        private readonly List<EventListenerVoid> _eventListeners = new List<EventListenerVoid>();
+
+        public void Raise()
         {
-            eventListeners[i].OnEventRaised();
+            for (int i = 0; i < _eventListeners.Count; i++)
+            {
+                _eventListeners[i].OnEventRaised();
+            }
         }
-    }
 
-    public void Register(EventListenerVoid listener)
-    {
-        if (!eventListeners.Contains(listener))
-            eventListeners.Add(listener);
-    }
+        public void Register(EventListenerVoid listener)
+        {
+            if (!_eventListeners.Contains(listener))
+                _eventListeners.Add(listener);
+        }
 
-    public void Unregister(EventListenerVoid listener)
-    {
-        if (eventListeners.Contains(listener))
-            eventListeners.Remove(listener);
+        public void Unregister(EventListenerVoid listener)
+        {
+            if (_eventListeners.Contains(listener))
+                _eventListeners.Remove(listener);
+        }
     }
 }

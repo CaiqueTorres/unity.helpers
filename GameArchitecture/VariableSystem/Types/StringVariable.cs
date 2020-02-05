@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using homehelp.Events;
 
-[CreateAssetMenu(menuName = "Variable/String", fileName = "New String Variable")]
-public class StringVariable : ScriptableObject
+namespace homehelp.Variables
+{
+    [CreateAssetMenu(menuName = "Variable/String", fileName = "New String Variable")]
+    public class StringVariable : ScriptableObject
 {
     public enum GameEventType
     {
@@ -14,7 +17,7 @@ public class StringVariable : ScriptableObject
     public GameEventString changedEventString;
     public GameEventVoid changedEventVoid;
 
-    private string value;
+    [SerializeField] private string value;
 
     public string Value
     {
@@ -64,4 +67,5 @@ public class StringVariable : ScriptableObject
     {
         return variable.Value;
     }
+}
 }

@@ -1,27 +1,44 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "New Float GameEvent", menuName = "GameEvent/Float")]
-public class GameEventFloat : ScriptableObject
+namespace homehelp.Events
 {
-    private List<EventListenerFloat> eventListeners = new List<EventListenerFloat>();
-    public float reference;
-
-    private void Awake() { reference = 0f; }
-
-    public void Raise(float value) 
+    [CreateAssetMenu(fileName = "New Float GameEvent", menuName = "GameEvent/Float")]
+    public class GameEventFloat : ScriptableObject
     {
-        reference = value;
-        foreach (EventListenerFloat item in eventListeners) { item.OnEventRaised(value); }
-    }
+        private readonly List<EventListenerFloat> _eventListeners = new List<EventListenerFloat>();
 
-    public void Register(EventListenerFloat listener)
-    {
-        if (!eventListeners.Contains(listener)) { eventListeners.Add(listener); }
-    }
+        [HideInInspector] public float value;
+        public float simulateValue;
 
-    public void Unregister(EventListenerFloat listener)
-    {
-        if (eventListeners.Contains(listener)) { eventListeners.Remove(listener); }
+        private void Awake()
+        {
+            value = 0f;
+        }
+
+        public void Raise(float value)
+        {
+            this.value = value;
+            foreach (var item in _eventListeners)
+            {
+                item.OnEventRaised(value);
+            }
+        }
+
+        public void Register(EventListenerFloat listener)
+        {
+            if (!_eventListeners.Contains(listener))
+            {
+                _eventListeners.Add(listener);
+            }
+        }
+
+        public void Unregister(EventListenerFloat listener)
+        {
+            if (_eventListeners.Contains(listener))
+            {
+                _eventListeners.Remove(listener);
+            }
+        }
     }
 }

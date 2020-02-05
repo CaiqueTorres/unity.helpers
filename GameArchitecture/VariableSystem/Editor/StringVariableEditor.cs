@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using homehelp.Events;
 
-[CanEditMultipleObjects]
-[CustomEditor(typeof(StringVariable))]
-public class StringVariableEditor : Editor
+namespace homehelp.Variables
+{
+    [CanEditMultipleObjects]
+    [CustomEditor(typeof(StringVariable))]
+    public class StringVariableEditor : Editor
 {
     private int type;
     StringVariable sv;
@@ -48,4 +51,5 @@ public class StringVariableEditor : Editor
         EditorUtility.SetDirty(target);
 #endif
     }
+}
 }

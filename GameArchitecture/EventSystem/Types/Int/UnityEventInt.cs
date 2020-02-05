@@ -1,5 +1,7 @@
 ﻿using UnityEngine.Events;
 
-[System.Serializable]
-public class UnityEventInt : UnityEvent<int> { }
-
+namespace homehelp.Events
+{
+    [System.Serializable]
+    public class UnityEventInt : UnityEvent<int> { }
+}

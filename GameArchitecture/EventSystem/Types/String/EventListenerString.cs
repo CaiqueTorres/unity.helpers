@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 
-public class EventListenerString : MonoBehaviour
+namespace homehelp.Events
+{
+    public class EventListenerString : MonoBehaviour
 {
     public GameEventString gameEvent;
     public UnityEventString response;
@@ -15,4 +17,5 @@ public class EventListenerString : MonoBehaviour
     }
 
     public void OnEventRaised(string value) { response.Invoke(value); }
+}
 }

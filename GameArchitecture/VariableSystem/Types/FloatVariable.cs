@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using homehelp.Events;
 
-[CreateAssetMenu(menuName = "Variable/Float", fileName = "New Float Variable")]
-public class FloatVariable : ScriptableObject
+namespace homehelp.Variables
+{
+    [CreateAssetMenu(menuName = "Variable/Float", fileName = "New Float Variable")]
+    public class FloatVariable : ScriptableObject
 {
     public enum GameEventType
     {
@@ -14,7 +17,7 @@ public class FloatVariable : ScriptableObject
     public GameEventFloat changedEventFloat;
     public GameEventVoid changedEventVoid;
 
-    private float value;
+    [SerializeField] private float value;
     public float Value
     {
         get
@@ -62,4 +65,5 @@ public class FloatVariable : ScriptableObject
     {
         return variable.Value;
     }
+}
 }

@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using homehelp.Events;
 
-[CanEditMultipleObjects]
-[CustomEditor(typeof(FloatVariable))]
-public class FloatVariableEditor : Editor
+namespace homehelp.Variables
+{
+    [CanEditMultipleObjects]
+    [CustomEditor(typeof(FloatVariable))]
+    public class FloatVariableEditor : Editor
 {
     private int type;
     FloatVariable sv;
@@ -47,4 +50,5 @@ public class FloatVariableEditor : Editor
         EditorUtility.SetDirty(target);
 #endif
     }
+}
 }

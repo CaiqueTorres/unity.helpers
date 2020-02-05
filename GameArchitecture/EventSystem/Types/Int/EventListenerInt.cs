@@ -1,18 +1,21 @@
 ﻿using UnityEngine;
 
-public class EventListenerInt : MonoBehaviour
+namespace homehelp.Events
 {
-    public GameEventInt gameEvent;
-    public UnityEventInt response;
-
-    public void OnEnable()
+    public class EventListenerInt : MonoBehaviour
     {
-        if (gameEvent != null) gameEvent.Register(this);
-    }
-    public void OnDisable()
-    {
-        if (gameEvent != null) gameEvent.Unregister(this);
-    }
+        public GameEventInt gameEvent;
+        public UnityEventInt response;
 
-    public void OnEventRaised(int value) { response.Invoke(value); }
+        public void OnEnable()
+        {
+            if (gameEvent != null) gameEvent.Register(this);
+        }
+        public void OnDisable()
+        {
+            if (gameEvent != null) gameEvent.Unregister(this);
+        }
+
+        public void OnEventRaised(int value) { response.Invoke(value); }
+    }
 }

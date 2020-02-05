@@ -1,27 +1,23 @@
-﻿using UnityEngine;
-using homehelp.Events;
+using UnityEngine;
 
-namespace homehelp.Variables
+namespace homehelp.Events
 {
-    [SerializeField]
-    [CreateAssetMenu(menuName = "Variable/Int", fileName = "New Int Variable")]
-    public class IntVariable : ScriptableObject
+    [CreateAssetMenu(menuName = "Variable/_className_", fileName = "New _className_ Variable")]
+    public class _className_Variable : ScriptableObject
     {
         public enum GameEventType
         {
-            Int,
+            _className_,
             Void,
-            IntAndVoid
+            _className_AndVoid
         }
 
-        public int teste;
-        
         public GameEventType gameEventType;
-        public GameEventInt changedEventInt;
+        public GameEvent_className_ changedEvent_className_;
         public GameEventVoid changedEventVoid;
 
-        [SerializeField] private int value;
-        public int Value
+        [SerializeField] private _className_ value;
+        public _className_ Value
         {
             get
             {
@@ -33,19 +29,19 @@ namespace homehelp.Variables
             }
         }
 
-        public void SetValue(int value) // é necessário pois poderá ser chamado a parte depois
+        public void SetValue(_className_ value) // é necessário pois poderá ser chamado a parte depois
         {
             this.value = value;
 
-            if (changedEventInt != null)
+            if (changedEvent_className_ != null)
             {
 
                 switch (gameEventType)
                 {
-                    case GameEventType.Int:
-                        if (changedEventInt != null)
+                    case GameEventType._className_:
+                        if (changedEvent_className_ != null)
                         {
-                            changedEventInt.Raise(value);
+                            changedEvent_className_.Raise(value);
                         }
                         break;
                     case GameEventType.Void:
@@ -55,17 +51,17 @@ namespace homehelp.Variables
                         }
                         break;
                     default:
-                        if (changedEventInt != null && changedEventVoid != null)
+                        if (changedEvent_className_ != null && changedEventVoid != null)
                         {
                             changedEventVoid.Raise();
-                            changedEventInt.Raise(value);
+                            changedEvent_className_.Raise(value);
                         }
                         break;
                 }
             }
         }
 
-        public static implicit operator int(IntVariable variable)
+        public static implicit operator _className_(_className_Variable variable)
         {
             return variable.Value;
         }

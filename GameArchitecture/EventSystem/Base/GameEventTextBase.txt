@@ -1,0 +1,29 @@
+using UnityEngine;
+using System.Collections.Generic;
+
+namespace homehelp.Events
+{
+    [CreateAssetMenu(fileName = "New _className_ GameEvent", menuName = "GameEvent/_className_")]
+    public class GameEvent_className_ : ScriptableObject
+    {
+        private readonly List<EventListener_className_> _eventListeners = new List<EventListener_className_>();
+        [HideInInspector] public _className_ value;
+        public _className_ simulateValue;
+
+        public void Raise(_className_ value)
+        {
+            this.value = value;
+            foreach (var item in _eventListeners) { item.OnEventRaised(value); }
+        }
+
+        public void Register(EventListener_className_ listener)
+        {
+            if (!_eventListeners.Contains(listener)) { _eventListeners.Add(listener); }
+        }
+
+        public void Unregister(EventListener_className_ listener)
+        {
+            if (_eventListeners.Contains(listener)) { _eventListeners.Remove(listener); }
+        }
+    }
+}

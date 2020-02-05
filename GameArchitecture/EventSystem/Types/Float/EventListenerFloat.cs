@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 
-public class EventListenerFloat : MonoBehaviour
+namespace homehelp.Events
+{
+    public class EventListenerFloat : MonoBehaviour
 {
     public GameEventFloat gameEvent;
     public UnityEventFloat response;
@@ -16,4 +18,5 @@ public class EventListenerFloat : MonoBehaviour
     }
 
     public void OnEventRaised(float value) { response.Invoke(value); }
+}
 }
