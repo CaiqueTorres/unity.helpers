@@ -7,7 +7,7 @@ namespace MultiLanguageText
         /*
          * Ouvinte padrão
          */
-        [SerializeField] private UnityEventLanguage response; // UnityEvent responsável por chamar alguma certa função de um certo componente dentro da Unity
-        public override void OnEventRaised(Language value) { response.Invoke(value); } // preenchimento da função OnEventRaised()
+        [SerializeField] private UnityEventLanguage response = null; // UnityEvent responsável por chamar alguma certa função de um certo componente dentro da Unity
+        public override void OnEventRaised(Language value) { response.Invoke(value); } // preenchimento da função OnEventRaised() 
     }
 }

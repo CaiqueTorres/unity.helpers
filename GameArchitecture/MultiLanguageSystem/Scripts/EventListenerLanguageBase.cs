@@ -7,7 +7,7 @@ namespace MultiLanguageText
         /*
          * Superclasse abstrata que será usada como base para todo tipo de ouvinte de GameEvents do tipo Language
          */
-        [SerializeField] GameEventLanguage gameEvent;
+        [SerializeField] private GameEventLanguage gameEvent = null;
 
         protected virtual void OnEnable()
         {

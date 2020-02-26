@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace homehelp.Events
@@ -5,6 +6,8 @@ namespace homehelp.Events
     [CreateAssetMenu(menuName = "Variable/_className_", fileName = "New _className_ Variable")]
     public class _className_Variable : ScriptableObject
     {
+         public Func<_className_, _className_> doWhenSetVariable = null;
+    
         public enum GameEventType
         {
             _className_,
@@ -31,33 +34,32 @@ namespace homehelp.Events
 
         public void SetValue(_className_ value) // é necessário pois poderá ser chamado a parte depois
         {
-            this.value = value;
-
-            if (changedEvent_className_ != null)
+            this.value = (null == doWhenSetVariable) ? value : doWhenSetVariable.Invoke(value);
+            
+            if (changedEvent_className_ == null)
+                return;
+            
+            switch (gameEventType)
             {
-
-                switch (gameEventType)
-                {
-                    case GameEventType._className_:
-                        if (changedEvent_className_ != null)
-                        {
-                            changedEvent_className_.Raise(value);
-                        }
-                        break;
-                    case GameEventType.Void:
-                        if (changedEventVoid != null)
-                        {
-                            changedEventVoid.Raise();
-                        }
-                        break;
-                    default:
-                        if (changedEvent_className_ != null && changedEventVoid != null)
-                        {
-                            changedEventVoid.Raise();
-                            changedEvent_className_.Raise(value);
-                        }
-                        break;
-                }
+                case GameEventType._className_:
+                    if (changedEvent_className_ != null)
+                    {
+                        changedEvent_className_.Raise(this.value);
+                    }
+                    break;
+                case GameEventType.Void:
+                    if (changedEventVoid != null)
+                    {
+                        changedEventVoid.Raise();
+                    }
+                    break;
+                default:
+                    if (changedEvent_className_ != null && changedEventVoid != null)
+                    {
+                        changedEventVoid.Raise();
+                        changedEvent_className_.Raise(this.value);
+                    }
+                    break;
             }
         }
 

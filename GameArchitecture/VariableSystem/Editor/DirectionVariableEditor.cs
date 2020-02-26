@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using UnityEngine;
 using UnityEditor;
 using homehelp.Events;
@@ -6,22 +6,22 @@ using homehelp.Events;
 namespace homehelp.Variables
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(IntVariable))]
-    public class IntVariableEditor : Editor
+    [CustomEditor(typeof(DirectionVariable))]
+    public class DirectionVariableEditor : Editor
     {
         private int _type;
-        private IntVariable _intVariable;
+        private DirectionVariable _DirectionVariable;
 
         public void OnEnable()
         {
-            _intVariable = (IntVariable) target;
+            _DirectionVariable = (DirectionVariable) target;
         }
 
         public override void OnInspectorGUI()
         {
             GUILayout.BeginHorizontal();
             GUILayout.Label("Game Event Type");
-            _type = GUILayout.Toolbar(_type, new string[] {"Int", "Void", "Int and Void"},
+            _type = GUILayout.Toolbar(_type, new string[] {"Direction", "Void", "Direction and Void"},
                 GUILayout.Width(Screen.width * 0.595f));
             GUILayout.EndHorizontal();
 
@@ -29,23 +29,23 @@ namespace homehelp.Variables
             switch (_type)
             {
                 case 0:
-                    GUILayout.Label("Value: " + _intVariable.Value);
-                    _intVariable.gameEventType = IntVariable.GameEventType.Int;
-                    _intVariable.changedEventInt = (GameEventInt) EditorGUILayout.ObjectField("Game Event Int",
-                        _intVariable.changedEventInt, typeof(GameEventInt), false);
+                    GUILayout.Label("Value: " + _DirectionVariable.Value);
+                    _DirectionVariable.gameEventType = DirectionVariable.GameEventType.Direction;
+                    _DirectionVariable.changedEventDirection = (GameEventDirection) EditorGUILayout.ObjectField("Game Event Direction",
+                        _DirectionVariable.changedEventDirection, typeof(GameEventDirection), false);
                     break;
                 case 1:
-                    _intVariable.gameEventType = IntVariable.GameEventType.Void;
-                    _intVariable.changedEventVoid = (GameEventVoid) EditorGUILayout.ObjectField("Game Event Void",
-                        _intVariable.changedEventVoid, typeof(GameEventVoid), false);
+                    _DirectionVariable.gameEventType = DirectionVariable.GameEventType.Void;
+                    _DirectionVariable.changedEventVoid = (GameEventVoid) EditorGUILayout.ObjectField("Game Event Void",
+                        _DirectionVariable.changedEventVoid, typeof(GameEventVoid), false);
                     break;
                 default:
-                    GUILayout.Label("Value: " + _intVariable.Value);
-                    _intVariable.gameEventType = IntVariable.GameEventType.IntAndVoid;
-                    _intVariable.changedEventInt = (GameEventInt) EditorGUILayout.ObjectField("Game Event Int",
-                        _intVariable.changedEventInt, typeof(GameEventInt), false);
-                    _intVariable.changedEventVoid = (GameEventVoid) EditorGUILayout.ObjectField("Game Event Void",
-                        _intVariable.changedEventVoid, typeof(GameEventVoid), false);
+                    GUILayout.Label("Value: " + _DirectionVariable.Value);
+                    _DirectionVariable.gameEventType = DirectionVariable.GameEventType.DirectionAndVoid;
+                    _DirectionVariable.changedEventDirection = (GameEventDirection) EditorGUILayout.ObjectField("Game Event Direction",
+                        _DirectionVariable.changedEventDirection, typeof(GameEventDirection), false);
+                    _DirectionVariable.changedEventVoid = (GameEventVoid) EditorGUILayout.ObjectField("Game Event Void",
+                        _DirectionVariable.changedEventVoid, typeof(GameEventVoid), false);
                     break;
             }
 
@@ -66,9 +66,8 @@ namespace homehelp.Variables
 
             if (GUILayout.Button("Create interface", buttonStyle))
             {
-                CreateInterface(_intVariable.name);
+                CreateInterface(_DirectionVariable.name);
             }
-
             EditorGUILayout.HelpBox("Do not create variables with white spaces", MessageType.Warning);
 
             EditorGUI.EndDisabledGroup();
@@ -79,9 +78,8 @@ namespace homehelp.Variables
             EditorUtility.SetDirty(target);
 #endif
         }
-
+        
         #region Interface creation
-
         /// <summary>
         /// O game event void será o único diferente devido
         /// a não poder passar parametros
@@ -98,22 +96,20 @@ namespace homehelp.Variables
             }
 
             var newFilePath = string.Concat(directoryPath, fileName);
-
+            
             if (File.Exists(newFilePath))
             {
                 File.Delete(newFilePath);
             }
-
+            
             using (var streamWriter = new StreamWriter(newFilePath))
             {
-                var code = string.Concat("public interface ", "I", name, "\n{\n", "\tint ", "SetVariableValueProcess",
-                    "(int value);", "\n}\n");
+                var code = string.Concat("public interface ", "I", name,"\n{\n", "\tDirection ", "SetVariableValueProcess", "(Direction value);", "\n}\n");
                 streamWriter.Write(code);
             }
-
+            
             AssetDatabase.Refresh();
         }
-
         #endregion
     }
 }

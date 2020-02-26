@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 51839e08d59b04c488346d8214b1398d
+guid: 42f573d186a5adc46a8cc97f1d4b5ea7
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences: []
   executionOrder: 0
-  icon: {fileID: 2800000, guid: 6cb7c00c92fd48f4eb93dc30af5263e1, type: 3}
+  icon: {instanceID: 0}
   userData: 
   assetBundleName: 
   assetBundleVariant: 

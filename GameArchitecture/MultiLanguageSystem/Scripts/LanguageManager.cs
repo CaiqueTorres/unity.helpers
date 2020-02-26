@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 
 namespace MultiLanguageText
@@ -7,7 +7,7 @@ namespace MultiLanguageText
     [RequireComponent(typeof(TMPro.TextMeshProUGUI))] // requerição de um certo componente
     public class LanguageManager : EventListenerLanguageBase // herda a superclasse abstrata
     {
-        [SerializeField] private LanguageVariable languageVariable; // variavel que guarda o atual idioma do jogo
+        [SerializeField] private LanguageVariable languageVariable = null; // variavel que guarda o atual idioma do jogo
         [SerializeField] private List<MultiLanguageText> languageTextList = new List<MultiLanguageText>(); // lista com todos os idiomas e seus respectivos textos
 
         private Language previousLanguage = null; // idioma anterior

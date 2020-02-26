@@ -6,18 +6,39 @@ public class VariableCreator : EditorWindow
 {
     private static readonly string pathToBase = "Assets/3rdParty/home.help/VariableSystem/Base/";
     private static readonly string pathToType = "Assets/3rdParty/home.help/VariableSystem/Types/";
+    private static readonly string pathToEditor = "Assets/3rdParty/home.help/VariableSystem/Editor/";
 
     private static string _className;
     private static TextAsset _textAsset;
 
+    private int _type;
+    
     #region Editor window
     [MenuItem("Window/Variable Creator")]
     public static void ShowWindow() => GetWindow<VariableCreator>("Variable Creator");
 
     private void OnGUI()
     {
+        var toolbarStyle = new GUIStyle(GUI.skin.button)
+        {
+            fixedWidth = 200f,
+            alignment = TextAnchor.MiddleLeft,
+        };
+        
+        _type = GUILayout.Toolbar(_type, new string[] { "Asset", "String"}, toolbarStyle);
+        GUILayout.Space(10f);
+        
+        switch (_type)
+        {
+            case 0:
+                _textAsset = (TextAsset) EditorGUILayout.ObjectField("Text file:", _textAsset, typeof(TextAsset),false);
+                break;
+            case 1:
+                _className = EditorGUILayout.TextField("Text:", _className);
+                break;
+        }
+    
         GUILayout.Space(10);
-        _textAsset = (TextAsset) EditorGUILayout.ObjectField("Text file:", _textAsset, typeof(TextAsset),false);
 
         var btnLayout = new GUIStyle(GUI.skin.button)
         {
@@ -27,10 +48,9 @@ public class VariableCreator : EditorWindow
 
         if (GUILayout.Button("Create", btnLayout))
         {
-            if (_textAsset == null)
-                return;
+            if (_type == 0)
+                _className = _textAsset.name;
             
-            _className = _textAsset.name;
             Create(_className);
         }
     }
@@ -46,8 +66,8 @@ public class VariableCreator : EditorWindow
         if (Validate(className))
         {
             #region Creating variable
+            
             var filePath = string.Concat(pathToType, className, "Variable", ".cs");
-
             if (!File.Exists(string.Concat(GameEventCreator.pathToType, "GameEvent", className, ".cs")))
             {
                 GameEventCreator.Create(className);
@@ -67,6 +87,26 @@ public class VariableCreator : EditorWindow
                 }
                 streamWriter.Write(code);
             }
+            #endregion
+            
+            #region Creating variable editor
+
+            var filePathEditor = string.Concat(pathToEditor, className, "Variable", "Editor", ".cs");
+            if (File.Exists(filePathEditor))
+            {
+                File.Delete(filePathEditor);
+            }
+            
+            using (var streamWriter = new StreamWriter(filePathEditor))
+            {
+                string code;
+                using (var streamReader = new StreamReader(string.Concat(pathToBase, "VariableEditorTextBase.txt")))
+                {
+                    code = streamReader.ReadToEnd().Replace("_className_", className);
+                }
+                streamWriter.Write(code);
+            }
+            
             #endregion
 
             AssetDatabase.Refresh();

@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using UnityEngine;
 using UnityEditor;
 using homehelp.Events;
@@ -6,22 +6,22 @@ using homehelp.Events;
 namespace homehelp.Variables
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(IntVariable))]
-    public class IntVariableEditor : Editor
+    [CustomEditor(typeof(_className_Variable))]
+    public class _className_VariableEditor : Editor
     {
         private int _type;
-        private IntVariable _intVariable;
+        private _className_Variable __className_Variable;
 
         public void OnEnable()
         {
-            _intVariable = (IntVariable) target;
+            __className_Variable = (_className_Variable) target;
         }
 
         public override void OnInspectorGUI()
         {
             GUILayout.BeginHorizontal();
             GUILayout.Label("Game Event Type");
-            _type = GUILayout.Toolbar(_type, new string[] {"Int", "Void", "Int and Void"},
+            _type = GUILayout.Toolbar(_type, new string[] {"_className_", "Void", "_className_ and Void"},
                 GUILayout.Width(Screen.width * 0.595f));
             GUILayout.EndHorizontal();
 
@@ -29,23 +29,23 @@ namespace homehelp.Variables
             switch (_type)
             {
                 case 0:
-                    GUILayout.Label("Value: " + _intVariable.Value);
-                    _intVariable.gameEventType = IntVariable.GameEventType.Int;
-                    _intVariable.changedEventInt = (GameEventInt) EditorGUILayout.ObjectField("Game Event Int",
-                        _intVariable.changedEventInt, typeof(GameEventInt), false);
+                    GUILayout.Label("Value: " + __className_Variable.Value);
+                    __className_Variable.gameEventType = _className_Variable.GameEventType._className_;
+                    __className_Variable.changedEvent_className_ = (GameEvent_className_) EditorGUILayout.ObjectField("Game Event _className_",
+                        __className_Variable.changedEvent_className_, typeof(GameEvent_className_), false);
                     break;
                 case 1:
-                    _intVariable.gameEventType = IntVariable.GameEventType.Void;
-                    _intVariable.changedEventVoid = (GameEventVoid) EditorGUILayout.ObjectField("Game Event Void",
-                        _intVariable.changedEventVoid, typeof(GameEventVoid), false);
+                    __className_Variable.gameEventType = _className_Variable.GameEventType.Void;
+                    __className_Variable.changedEventVoid = (GameEventVoid) EditorGUILayout.ObjectField("Game Event Void",
+                        __className_Variable.changedEventVoid, typeof(GameEventVoid), false);
                     break;
                 default:
-                    GUILayout.Label("Value: " + _intVariable.Value);
-                    _intVariable.gameEventType = IntVariable.GameEventType.IntAndVoid;
-                    _intVariable.changedEventInt = (GameEventInt) EditorGUILayout.ObjectField("Game Event Int",
-                        _intVariable.changedEventInt, typeof(GameEventInt), false);
-                    _intVariable.changedEventVoid = (GameEventVoid) EditorGUILayout.ObjectField("Game Event Void",
-                        _intVariable.changedEventVoid, typeof(GameEventVoid), false);
+                    GUILayout.Label("Value: " + __className_Variable.Value);
+                    __className_Variable.gameEventType = _className_Variable.GameEventType._className_AndVoid;
+                    __className_Variable.changedEvent_className_ = (GameEvent_className_) EditorGUILayout.ObjectField("Game Event _className_",
+                        __className_Variable.changedEvent_className_, typeof(GameEvent_className_), false);
+                    __className_Variable.changedEventVoid = (GameEventVoid) EditorGUILayout.ObjectField("Game Event Void",
+                        __className_Variable.changedEventVoid, typeof(GameEventVoid), false);
                     break;
             }
 
@@ -66,9 +66,8 @@ namespace homehelp.Variables
 
             if (GUILayout.Button("Create interface", buttonStyle))
             {
-                CreateInterface(_intVariable.name);
+                CreateInterface(__className_Variable.name);
             }
-
             EditorGUILayout.HelpBox("Do not create variables with white spaces", MessageType.Warning);
 
             EditorGUI.EndDisabledGroup();
@@ -79,9 +78,8 @@ namespace homehelp.Variables
             EditorUtility.SetDirty(target);
 #endif
         }
-
+        
         #region Interface creation
-
         /// <summary>
         /// O game event void será o único diferente devido
         /// a não poder passar parametros
@@ -98,22 +96,20 @@ namespace homehelp.Variables
             }
 
             var newFilePath = string.Concat(directoryPath, fileName);
-
+            
             if (File.Exists(newFilePath))
             {
                 File.Delete(newFilePath);
             }
-
+            
             using (var streamWriter = new StreamWriter(newFilePath))
             {
-                var code = string.Concat("public interface ", "I", name, "\n{\n", "\tint ", "SetVariableValueProcess",
-                    "(int value);", "\n}\n");
+                var code = string.Concat("public interface ", "I", name,"\n{\n", "\t_className_ ", "SetVariableValueProcess", "(_className_ value);", "\n}\n");
                 streamWriter.Write(code);
             }
-
+            
             AssetDatabase.Refresh();
         }
-
         #endregion
     }
 }
