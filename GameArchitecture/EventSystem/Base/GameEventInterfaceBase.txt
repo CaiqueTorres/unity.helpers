@@ -1,4 +1,0 @@
-public interface I_gameEventName_
-{
-    void _gameEventName_(_gameEventName_ value);
-}

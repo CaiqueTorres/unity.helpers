@@ -1,7 +1,0 @@
-using UnityEngine.Events;
-
-namespace homehelp.Events 
-{
-	[System.Serializable]
-	public class UnityEvent_className_ : UnityEvent<_className_> { }
-}
